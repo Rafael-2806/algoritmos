@@ -1,19 +1,26 @@
 
 
-
-def quicksort(lista):
-    
-    if len(lista)<=1:
+def merge_sort(lista):
+    if len(lista)<= 1:
         return lista
-    else:
-        pivote= lista[0]
+    mitad =len(lista)//2
+    izquierda= merge_sort(lista[:mitad])
+    derecha = merge_sort(lista[mitad:])
+    
+    return merge(izquierda, derecha)
+def merge(izquierda, derecha):
+    if not izquierda:
+        return derecha
+    if not derecha:
+        return izquierda
+    if izquierda[0]<derecha[0]:
+        return [izquierda[0]]+merge(izquierda[1:],derecha)
+    return[derecha[0]]+ merge(izquierda, derecha[1:])
+                
         
-        menores= [x for x in lista[1:] if x <=pivote]
-        mayores= [x for x in lista[1:] if x >pivote]
-        return quicksort(menores)+ [pivote]+ quicksort(mayores)
 
 # Prueba
 lista = [64, 34, 25, 12, 22, 11, 90]
 print("Lista original:", lista)
-lista_ordenada = quicksort(lista)
+lista_ordenada = merge_sort(lista)
 print("Lista ordenada:", lista_ordenada)
